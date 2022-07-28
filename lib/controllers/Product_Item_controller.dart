@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:ecommapp/controllers/Wishlist_controller.dart';
 import 'package:get/get.dart';
 
 import '../models/Product.dart';
@@ -10,6 +11,8 @@ class ProductItemController extends GetxController
   final ProductsProvider productsProvider;
 
   ProductItemController({required this.productsProvider});
+
+  WishListController wc = Get.find<WishListController>();
 
   List<dynamic> _products = [].obs;
 
@@ -34,6 +37,7 @@ class ProductItemController extends GetxController
         );
         // print(p);
         _products = [...p];
+        wc.addProdustList(_products);
         change(getProducts, status: RxStatus.success());
       },
     ).catchError((err) {

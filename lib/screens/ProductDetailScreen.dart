@@ -82,9 +82,9 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    final id = Get.parameters["id"] as String;
+    final id = Get.parameters["id"];
     // print(id);
-    Product p = pc.getProductById(id);
+    Product p = pc.getProductById(int.parse(id!));
     // print("heelo");
     return Scaffold(
       appBar: AppBar(
@@ -169,11 +169,11 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                         ),
                         IconButton(
                           onPressed: () {
-                            wc.addProduct(p.id);
+                            wc.toogleWishlist(p.id);
                           },
-                          icon: Icon(
-                            Icons.bookmark_add_outlined,
-                          ),
+                          icon: wc.isWishList(int.parse(id))
+                              ? Icon(Icons.bookmark_add)
+                              : Icon(Icons.bookmark_add_outlined),
                         )
                       ],
                     )

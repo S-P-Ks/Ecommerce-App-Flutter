@@ -15,7 +15,7 @@ class ProductOverView extends GetView<ProductItemController> {
   ProductOverView({Key? key}) : super(key: key);
   static String routeName = "/";
 
-  // WishListController wc = Get.find<WishListController>();
+  WishListController wc = Get.find<WishListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +80,7 @@ class ProductOverView extends GetView<ProductItemController> {
                         ),
                         trailing: IconButton(
                             onPressed: () {
-                              // wc.addProduct(id);
+                              wc.toogleWishlist(id);
                             },
                             icon: Icon(Icons.bookmark_add_outlined)),
                       ),

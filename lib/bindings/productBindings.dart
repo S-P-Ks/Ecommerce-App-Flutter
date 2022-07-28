@@ -9,6 +9,7 @@ class ProductBinding extends Bindings {
   @override
   void dependencies() {
     Get.lazyPut(() => ProductsProvider());
+    Get.put(WishListController(), permanent: true);
     Get.put(ProductItemController(productsProvider: Get.find()));
   }
 }

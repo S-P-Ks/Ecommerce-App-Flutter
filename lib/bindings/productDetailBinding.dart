@@ -5,7 +5,6 @@ import '../controllers/Wishlist_controller.dart';
 
 class ProductDetailsBinding extends Bindings {
   void dependencies() {
-    Get.put(WishListController());
     Get.put(ProductDetailController());
   }
 }
