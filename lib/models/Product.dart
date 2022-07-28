@@ -25,15 +25,18 @@ class Product {
   String image;
   Rating rating;
 
-  factory Product.fromJson(Map<String, dynamic> json) => Product(
-        id: json["id"],
-        title: json["title"],
-        price: json["price"].toDouble(),
-        description: json["description"],
-        category: categoryValues.map[json["category"]]!,
-        image: json["image"],
-        rating: Rating.fromJson(json["rating"]),
-      );
+  factory Product.fromJson(Map<String, dynamic> json) {
+    // print(json);
+    return Product(
+      id: json["id"],
+      title: json["title"],
+      price: json["price"].toDouble(),
+      description: json["description"],
+      category: categoryValues.map[json["category"]]!,
+      image: json["image"],
+      rating: Rating.fromJson(json["rating"]),
+    );
+  }
 
   Map<String, dynamic> toJson() => {
         "id": id,

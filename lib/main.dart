@@ -1,6 +1,10 @@
+import 'package:ecommapp/screens/OrderScreen.dart';
+import 'package:ecommapp/screens/ProductDetailScreen.dart';
 import 'package:ecommapp/screens/ProductOverView.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'bindings/productBindings.dart';
 
 void main() {
   runApp(const MyApp());
@@ -13,11 +17,31 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      getPages: [GetPage(name: "/", page: () => ProductOverView())],
+      getPages: [
+        GetPage(
+          name: "/",
+          page: () => ProductOverView(),
+          transition: Transition.leftToRight,
+          binding: ProductBinding(),
+        ),
+        GetPage(
+          name: "/orders",
+          page: () => OrderScreen(),
+          transition: Transition.leftToRight,
+        ),
+        GetPage(
+          name: "/shop/:id",
+          page: () => ProductDetailScreen(),
+          transition: Transition.leftToRight,
+          binding: ProductBinding(),
+        ),
+      ],
+      themeMode: ThemeMode.dark,
     );
   }
 }
