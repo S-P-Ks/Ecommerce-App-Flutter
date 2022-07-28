@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import 'bindings/productBindings.dart';
 import 'bindings/productDetailBinding.dart';
+import 'controllers/Wishlist_controller.dart';
 
 void main() {
   runApp(const MyApp());

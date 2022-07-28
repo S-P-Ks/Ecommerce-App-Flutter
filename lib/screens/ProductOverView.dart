@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:ecommapp/controllers/Product_Item_controller.dart';
+import 'package:ecommapp/controllers/Wishlist_controller.dart';
 import 'package:ecommapp/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,8 +12,10 @@ enum FilterOptions {
 }
 
 class ProductOverView extends GetView<ProductItemController> {
-  const ProductOverView({Key? key}) : super(key: key);
+  ProductOverView({Key? key}) : super(key: key);
   static String routeName = "/";
+
+  // WishListController wc = Get.find<WishListController>();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +79,9 @@ class ProductOverView extends GetView<ProductItemController> {
                           style: TextStyle(fontFamily: "Quicksand"),
                         ),
                         trailing: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              // wc.addProduct(id);
+                            },
                             icon: Icon(Icons.bookmark_add_outlined)),
                       ),
                     ),

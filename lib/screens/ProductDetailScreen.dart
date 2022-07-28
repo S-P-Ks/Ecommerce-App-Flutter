@@ -9,7 +9,7 @@ import 'package:get/get.dart';
 
 import '../models/Product.dart';
 
-class ProductDetailScreen extends GetView<ProductDetailController> {
+class ProductDetailScreen extends GetWidget<ProductDetailController> {
   ProductDetailScreen({Key? key}) : super(key: key);
 
   ProductDetailController pc = Get.find<ProductDetailController>();
