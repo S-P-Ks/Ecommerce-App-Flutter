@@ -1,4 +1,5 @@
 import 'package:ecommapp/controllers/Product_Item_controller.dart';
+import 'package:ecommapp/controllers/Product_detai_controller.dart';
 import 'package:ecommapp/models/productsProvider.dart';
 import 'package:get/get.dart';
 

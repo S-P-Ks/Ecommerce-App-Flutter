@@ -17,13 +17,17 @@ class ProductItemController extends GetxController
     return [..._products];
   }
 
+  Product getProduct(String id) {
+    return _products.firstWhere((element) => element.id == id);
+  }
+
   @override
   void onInit() {
-    // getAllProducts();
+    getAllProducts();
     super.onInit();
   }
 
-  Future<List<Product>> getAllProducts() async {
+  void getAllProducts() async {
     await productsProvider.getProducts().then(
       (value) {
         List<dynamic> pr = value.body!;
@@ -34,8 +38,15 @@ class ProductItemController extends GetxController
         );
         // print(p);
         _products = [...p];
+        change(getProducts, status: RxStatus.success());
       },
-    );
-    return getProducts;
+    ).catchError((err) {
+      change(
+        err,
+        status: RxStatus.error(
+          err.toString(),
+        ),
+      );
+    });
   }
 }

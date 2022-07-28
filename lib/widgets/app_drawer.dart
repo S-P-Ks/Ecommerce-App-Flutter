@@ -30,7 +30,7 @@ class AppDrawer extends GetView {
                 children: [
                   InkWell(
                     onTap: () {
-                      print("Clicked");
+                      // print("Clicked");
                     },
                     child: const CircleAvatar(
                       radius: 50,

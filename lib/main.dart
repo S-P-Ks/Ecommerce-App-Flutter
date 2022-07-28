@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import 'bindings/productBindings.dart';
+import 'bindings/productDetailBinding.dart';
 
 void main() {
   runApp(const MyApp());
@@ -22,6 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
+      initialBinding: ProductBinding(),
       getPages: [
         GetPage(
           name: "/",
@@ -38,7 +40,7 @@ class MyApp extends StatelessWidget {
           name: "/shop/:id",
           page: () => ProductDetailScreen(),
           transition: Transition.leftToRight,
-          binding: ProductBinding(),
+          binding: ProductDetailsBinding(),
         ),
       ],
       themeMode: ThemeMode.dark,

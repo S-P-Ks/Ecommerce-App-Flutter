@@ -14,10 +14,6 @@ class ProductOverView extends GetView<ProductItemController> {
   const ProductOverView({Key? key}) : super(key: key);
   static String routeName = "/";
 
-  void printProducts() {
-    print(controller.getProducts);
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -32,9 +28,8 @@ class ProductOverView extends GetView<ProductItemController> {
       drawer: AppDrawer(),
       body: Container(
         child: controller.obx(
-          (data) => FutureBuilder(
-            future: controller.getAllProducts(),
-            builder: (ctx, snapshot) => Container(
+          (data) {
+            return Container(
               child: ListView.builder(
                 itemCount: controller.getProducts.length,
                 itemBuilder: ((context, index) {
@@ -71,13 +66,11 @@ class ProductOverView extends GetView<ProductItemController> {
                   );
                 }),
               ),
-            ),
-          ),
-          onError: (error) {
-            return const Center(
-              child: Text("Something went wrong"),
             );
           },
+          onError: (error) => Center(
+            child: Text(error.toString()),
+          ),
         ),
       ),
     );
