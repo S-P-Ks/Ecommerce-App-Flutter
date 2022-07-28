@@ -17,10 +17,6 @@ class ProductItemController extends GetxController
     return [..._products];
   }
 
-  Product getProduct(String id) {
-    return _products.firstWhere((element) => element.id == id);
-  }
-
   @override
   void onInit() {
     getAllProducts();

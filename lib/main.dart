@@ -1,6 +1,8 @@
+import 'package:ecommapp/bindings/wishListBindings.dart';
 import 'package:ecommapp/screens/OrderScreen.dart';
 import 'package:ecommapp/screens/ProductDetailScreen.dart';
 import 'package:ecommapp/screens/ProductOverView.dart';
+import 'package:ecommapp/screens/WishListScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -41,6 +43,12 @@ class MyApp extends StatelessWidget {
           page: () => ProductDetailScreen(),
           transition: Transition.leftToRight,
           binding: ProductDetailsBinding(),
+        ),
+        GetPage(
+          name: "/wishlist",
+          page: () => WishListScreen(),
+          transition: Transition.leftToRight,
+          binding: WishListBinding(),
         ),
       ],
       themeMode: ThemeMode.dark,

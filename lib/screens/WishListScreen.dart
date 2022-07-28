@@ -1,45 +1,27 @@
-import 'dart:math';
-
-import 'package:ecommapp/controllers/Product_Item_controller.dart';
-import 'package:ecommapp/widgets/app_drawer.dart';
+import 'package:ecommapp/Constants/TextWidget.dart';
+import 'package:ecommapp/controllers/Wishlist_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-enum FilterOptions {
-  OnlyFavorites,
-  ShowAll,
-}
-
-class ProductOverView extends GetView<ProductItemController> {
-  const ProductOverView({Key? key}) : super(key: key);
-  static String routeName = "/";
+class WishListScreen extends GetView<WishListController> {
+  const WishListScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    print(controller.getWishList);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "MyShop",
-          style: TextStyle(
-            color: Theme.of(context).colorScheme.surface,
-          ),
-        ),
-        actions: [
-          IconButton(onPressed: () {}, icon: Icon(Icons.shopping_cart))
-        ],
+        title: Text("WishList"),
       ),
-      drawer: AppDrawer(),
       body: Container(
-        child: controller.obx(
-          (data) {
-            return Container(
-              child: ListView.builder(
-                itemCount: controller.getProducts.length,
+        child: controller.getWishList.length > 0
+            ? ListView.builder(
+                itemCount: controller.getWishList.length,
                 itemBuilder: ((context, index) {
-                  final img = controller.getProducts[index].image;
-                  final Title = controller.getProducts[index].title;
-                  final price = controller.getProducts[index].price;
-                  final id = controller.getProducts[index].id;
+                  final img = controller.getWishList[index].image;
+                  final Title = controller.getWishList[index].title;
+                  final price = controller.getWishList[index].price;
+                  final id = controller.getWishList[index].id;
 
                   return Container(
                     child: Card(
@@ -82,13 +64,14 @@ class ProductOverView extends GetView<ProductItemController> {
                     ),
                   );
                 }),
+              )
+            : Center(
+                child: TextWidget.getText(
+                  "No Product added to the Wishlist.",
+                  "Quicksand",
+                  20,
+                ),
               ),
-            );
-          },
-          onError: (error) => Center(
-            child: Text(error.toString()),
-          ),
-        ),
       ),
     );
   }

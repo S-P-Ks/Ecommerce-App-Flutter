@@ -65,7 +65,9 @@ class AppDrawer extends GetView {
           ListTile(
             leading: Icon(Icons.bookmark_add_outlined),
             title: Text('Wish List'),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed("/wishlist");
+            },
           ),
         ],
       ),
