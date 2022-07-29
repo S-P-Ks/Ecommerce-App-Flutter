@@ -11,7 +11,6 @@ class OrderScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text("Orders"),
       ),
-      drawer: AppDrawer(),
     );
   }
 }

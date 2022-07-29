@@ -3,6 +3,7 @@ import 'package:ecommapp/Constants/fonts.dart';
 import 'package:ecommapp/controllers/Product_Item_controller.dart';
 import 'package:ecommapp/controllers/Product_detai_controller.dart';
 import 'package:ecommapp/controllers/Wishlist_controller.dart';
+import 'package:ecommapp/controllers/cart_controller.dart';
 import 'package:flutter/material.dart';
 import 'dart:math';
 import 'package:get/get.dart';
@@ -14,6 +15,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
 
   ProductDetailController pc = Get.find<ProductDetailController>();
   WishListController wc = Get.find<WishListController>();
+  CartController cc = Get.find<CartController>();
 
   Widget getRating(var n) {
     final num = n.round();
@@ -153,27 +155,48 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                         ),
                       ],
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Row(
                       children: [
-                        Expanded(
-                          child: ElevatedButton(
-                            onPressed: () {},
-                            child: Text("Add to cart"),
+                        Obx(
+                          () => Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                cc.toggleCart(int.parse(id));
+                              },
+                              child: cc.isInCart(int.parse(id))
+                                  ? Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      children: const [
+                                        Text("Added to cart"),
+                                        SizedBox(
+                                          width: 10,
+                                        ),
+                                        Icon(
+                                          Icons.check_circle,
+                                          color: Colors.green,
+                                        ),
+                                      ],
+                                    )
+                                  : Text("Add to cart"),
+                            ),
                           ),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 10,
                         ),
-                        IconButton(
-                          onPressed: () {
-                            wc.toogleWishlist(p.id);
-                          },
-                          icon: wc.isWishList(int.parse(id))
-                              ? Icon(Icons.bookmark_add)
-                              : Icon(Icons.bookmark_add_outlined),
+                        Obx(
+                          () => IconButton(
+                            onPressed: () {
+                              wc.toogleWishlist(p.id);
+                            },
+                            icon: wc.isWishList(int.parse(id))
+                                ? Icon(Icons.bookmark_add)
+                                : Icon(Icons.bookmark_add_outlined),
+                          ),
                         )
                       ],
                     )

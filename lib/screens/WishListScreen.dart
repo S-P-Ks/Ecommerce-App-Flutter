@@ -14,7 +14,8 @@ class WishListScreen extends GetView<WishListController> {
         title: Text("WishList"),
       ),
       body: Container(
-        child: controller.getWishList.length > 0
+          child: Obx(
+        () => controller.getWishList.length > 0
             ? ListView.builder(
                 itemCount: controller.getWishList.length,
                 itemBuilder: ((context, index) {
@@ -58,8 +59,9 @@ class WishListScreen extends GetView<WishListController> {
                           style: TextStyle(fontFamily: "Quicksand"),
                         ),
                         trailing: IconButton(
-                            onPressed: () {},
-                            icon: Icon(Icons.bookmark_add_outlined)),
+                          onPressed: () {},
+                          icon: Icon(Icons.bookmark_add_outlined),
+                        ),
                       ),
                     ),
                   );
@@ -72,7 +74,7 @@ class WishListScreen extends GetView<WishListController> {
                   20,
                 ),
               ),
-      ),
+      )),
     );
   }
 }

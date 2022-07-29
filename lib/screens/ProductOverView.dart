@@ -35,6 +35,7 @@ class ProductOverView extends GetView<ProductItemController> {
       body: Container(
         child: controller.obx(
           (data) {
+            print(controller.getProducts[0].quantity);
             return Container(
               child: ListView.builder(
                 itemCount: controller.getProducts.length,
@@ -52,38 +53,42 @@ class ProductOverView extends GetView<ProductItemController> {
                       ),
                       elevation: 5,
                       child: ListTile(
-                        onTap: () {
-                          Get.toNamed("/shop/$id");
-                        },
-                        style: ListTileStyle.list,
-                        contentPadding: const EdgeInsets.all(10),
-                        leading: SizedBox(
-                          width: 100,
-                          height: 100,
-                          child: FittedBox(
-                            child: Image.network(img),
-                            fit: BoxFit.contain,
+                          onTap: () {
+                            Get.toNamed("/shop/$id");
+                          },
+                          style: ListTileStyle.list,
+                          contentPadding: const EdgeInsets.all(10),
+                          leading: SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: FittedBox(
+                              child: Image.network(img),
+                              fit: BoxFit.contain,
+                            ),
                           ),
-                        ),
-                        title: Text(
-                          Title.length > 20
-                              ? Title.substring(0, 20) + "..."
-                              : Title,
-                          style: TextStyle(
-                            fontSize: 20,
-                            fontFamily: "Quicksand",
+                          title: Text(
+                            Title.length > 20
+                                ? Title.substring(0, 20) + "..."
+                                : Title,
+                            style: TextStyle(
+                              fontSize: 20,
+                              fontFamily: "Quicksand",
+                            ),
                           ),
-                        ),
-                        subtitle: Text(
-                          "\$${price}",
-                          style: TextStyle(fontFamily: "Quicksand"),
-                        ),
-                        trailing: IconButton(
-                            onPressed: () {
-                              wc.toogleWishlist(id);
-                            },
-                            icon: Icon(Icons.bookmark_add_outlined)),
-                      ),
+                          subtitle: Text(
+                            "\$${price}",
+                            style: TextStyle(fontFamily: "Quicksand"),
+                          ),
+                          trailing: Obx(
+                            () => IconButton(
+                              onPressed: () {
+                                wc.toogleWishlist(id);
+                              },
+                              icon: wc.isWishList(id)
+                                  ? Icon(Icons.bookmark_add)
+                                  : Icon(Icons.bookmark_add_outlined),
+                            ),
+                          )),
                     ),
                   );
                 }),
