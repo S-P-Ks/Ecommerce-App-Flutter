@@ -101,6 +101,12 @@ class AppDrawer extends StatelessWidget {
             onTap: () {
               FirebaseAuth.instance.signOut();
               getStorage.remove("userID");
+              getStorage.remove("username");
+              getStorage.remove("email");
+              getStorage.remove("phoneNumber");
+              getStorage.remove("address");
+              getStorage.remove("intro");
+              // getStorage.erase();
               Get.toNamed("/login");
             },
           ),

@@ -2,7 +2,7 @@ import 'package:ecommapp/bindings/loginBindings.dart';
 import 'package:ecommapp/bindings/signupBinding.dart';
 import 'package:ecommapp/bindings/wishListBindings.dart';
 import 'package:ecommapp/screens/CartScreen.dart';
-import 'package:ecommapp/screens/InfroScreen.dart';
+import 'package:ecommapp/screens/OnboardingScreen.dart';
 import 'package:ecommapp/screens/LoginScreen.dart';
 import 'package:ecommapp/screens/OrderScreen.dart';
 import 'package:ecommapp/screens/ProductDetailScreen.dart';
@@ -35,6 +35,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    print(getStorge.read("intro"));
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
@@ -42,10 +43,10 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.brown,
       ),
       initialRoute: FirebaseAuth.instance.currentUser != null
-          ? "/"
-          : getStorge.read("intro") == null
-              ? "/login"
-              : "/intro",
+          ? getStorge.read("intro") != null && getStorge.read("intro") == "done"
+              ? "/"
+              : "/intro"
+          : "/login",
       //  getStorge.read("userID") != null ? "/" : "/login",
       // initialBinding: ProductBinding(),
       getPages: [

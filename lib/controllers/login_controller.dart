@@ -26,6 +26,7 @@ class LoginController extends GetxController {
 
   @override
   void onClose() {
+    print("Disposing");
     emailController.dispose();
     passwordController.dispose();
   }
@@ -66,7 +67,13 @@ class LoginController extends GetxController {
           Duration(seconds: 2),
           () => Get.snackbar("Success", "Login Successful",
               snackPosition: SnackPosition.BOTTOM));
-      Get.toNamed("/");
+
+      if (getStorage.read("intro") != null &&
+          getStorage.read("intro") == "done") {
+        Get.toNamed("/");
+      } else {
+        Get.toNamed("/intro");
+      }
     } catch (e) {
       print(e);
       Get.snackbar(

@@ -43,12 +43,14 @@ class ProductItemController extends GetxController
     String address = user["address"];
     String email = user["email"];
     String imageUrl = user["imageurl"];
+    String intro = user["intro"];
 
     getStorage.write("username", username);
     getStorage.write("phoneNumber", phoneNumber);
     getStorage.write("address", address);
     getStorage.write("email", email);
     getStorage.write("imageUrl", imageUrl);
+    getStorage.write("intro", intro);
   }
 
   @override

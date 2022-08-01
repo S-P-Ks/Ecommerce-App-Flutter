@@ -161,7 +161,7 @@ class SignUpController extends GetxController {
         snackPosition: SnackPosition.BOTTOM,
       );
       await Future.delayed(Duration(microseconds: 1000));
-      Get.toNamed("/");
+      Get.toNamed("/intro");
     } catch (e) {
       print(e);
       Get.snackbar(
