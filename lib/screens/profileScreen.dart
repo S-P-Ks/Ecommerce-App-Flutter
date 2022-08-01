@@ -68,9 +68,8 @@ class ProfilePage extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.black54,
-                      child: Text(
-                        imgText,
-                        style: TextStyle(fontSize: 20, fontFamily: "Quicksand"),
+                      backgroundImage: NetworkImage(
+                        getStorage.read("imageUrl"),
                       ),
                     ),
                   ),

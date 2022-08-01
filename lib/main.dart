@@ -2,6 +2,7 @@ import 'package:ecommapp/bindings/loginBindings.dart';
 import 'package:ecommapp/bindings/signupBinding.dart';
 import 'package:ecommapp/bindings/wishListBindings.dart';
 import 'package:ecommapp/screens/CartScreen.dart';
+import 'package:ecommapp/screens/InfroScreen.dart';
 import 'package:ecommapp/screens/LoginScreen.dart';
 import 'package:ecommapp/screens/OrderScreen.dart';
 import 'package:ecommapp/screens/ProductDetailScreen.dart';
@@ -40,8 +41,13 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.brown,
       ),
-      initialRoute: getStorge.read("userID") != null ? "/" : "/login",
-      initialBinding: ProductBinding(),
+      initialRoute: FirebaseAuth.instance.currentUser != null
+          ? "/"
+          : getStorge.read("intro") == null
+              ? "/login"
+              : "/intro",
+      //  getStorge.read("userID") != null ? "/" : "/login",
+      // initialBinding: ProductBinding(),
       getPages: [
         GetPage(
           name: "/",
@@ -88,6 +94,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/profile",
           page: () => ProfilePage(),
+        ),
+        GetPage(
+          name: "/intro",
+          page: () => OnboardingScreen(),
         )
       ],
       themeMode: ThemeMode.dark,

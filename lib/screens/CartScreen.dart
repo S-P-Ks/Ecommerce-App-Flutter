@@ -1,6 +1,7 @@
 import 'package:ecommapp/Constants/TextWidget.dart';
 import 'package:ecommapp/controllers/cart_controller.dart';
 import 'package:ecommapp/widgets/CartItem.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -13,25 +14,44 @@ class CartScreen extends GetView<CartController> {
       appBar: AppBar(
         title: Text("Cart"),
       ),
-      body: SingleChildScrollView(
-        child: Container(
-          width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              const SizedBox(
-                height: 20,
-              ),
-              const Text(
-                "Added to the cart : ",
-                style: TextStyle(
-                  fontFamily: "Quicksand",
-                  fontSize: 20,
+      body: Container(
+        width: double.infinity,
+        child: Column(crossAxisAlignment: CrossAxisAlignment.center, children: [
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: const [
+                Text(
+                  "Added to the cart : ",
+                  style: TextStyle(
+                    fontFamily: "Quicksand",
+                    fontSize: 20,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const Divider(),
-              Container(
+                // ElevatedButton(
+                //   onPressed: () {
+                //     controller.addOrders();
+                //   },
+                //   child: const Text(
+                //     "Order now",
+                //     style: TextStyle(
+                //       fontFamily: "Quicksand",
+                //       fontSize: 20,
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
+          ),
+          const Divider(),
+          Expanded(
+            child: SingleChildScrollView(
+              child: Container(
                 padding: EdgeInsets.all(20),
                 decoration: const BoxDecoration(
                   border: Border(
@@ -74,7 +94,8 @@ class CartScreen extends GetView<CartController> {
                               },
                               key: ValueKey(id),
                               child: CartItem(
-                                id: id,
+                                id,
+                                key: UniqueKey(),
                               ),
                             );
                           }),
@@ -90,9 +111,42 @@ class CartScreen extends GetView<CartController> {
                         ),
                 ),
               ),
-            ],
+            ),
           ),
-        ),
+          Container(
+            padding: EdgeInsets.all(20),
+            child: Obx(
+              () => ElevatedButton(
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all<EdgeInsets>(
+                    const EdgeInsets.all(20),
+                  ),
+                  backgroundColor: MaterialStateProperty.resolveWith(
+                    (states) {
+                      if (states.contains(MaterialState.pressed)) {
+                        return Color.fromARGB(158, 121, 85, 72);
+                      }
+                      return Colors.brown;
+                    },
+                  ),
+                  textStyle:
+                      MaterialStateProperty.all<TextStyle>(const TextStyle(
+                    fontSize: 18,
+                    fontFamily: "Quicksand",
+                  )),
+                ),
+                onPressed: () {},
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text("\$${controller.totalPrice.value.toStringAsFixed(2)}"),
+                    Text("Order Now")
+                  ],
+                ),
+              ),
+            ),
+          ),
+        ]),
       ),
     );
   }

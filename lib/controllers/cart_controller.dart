@@ -1,10 +1,16 @@
+import 'package:ecommapp/controllers/order_controller.dart';
 import 'package:ecommapp/models/Product.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController with StateMixin<List<Product>> {
+  OrderController oc = Get.put(OrderController(), permanent: true);
+
   List<dynamic> _cartList = [].obs;
   var productsList = [];
-  RxBool open = false.obs;
+  RxBool open = true.obs;
+
+  RxDouble totalPrice = 0.0.obs;
 
   void onInit() {
     super.onInit();
@@ -19,6 +25,19 @@ class CartController extends GetxController with StateMixin<List<Product>> {
     return idx >= 0 ? true : false;
   }
 
+  void addOrders() {
+    String key = UniqueKey().toString();
+  }
+
+  void getTotalPrice() {
+    double t = _cartList.fold(totalPrice.value,
+        (previousValue, element) => previousValue + element.price);
+    totalPrice.value = t;
+
+    // print("Total Price : $totalPrice.value");
+    update();
+  }
+
   toggleCart(int id) {
     int idx = _cartList.indexWhere((element) => element.id == id);
     // print(idx);
@@ -30,7 +49,8 @@ class CartController extends GetxController with StateMixin<List<Product>> {
       });
       _cartList.add(p);
     }
-    print(_cartList);
+    // print(_cartList);
+    getTotalPrice();
     update();
   }
 
@@ -56,7 +76,7 @@ class CartController extends GetxController with StateMixin<List<Product>> {
 
   void remove(int id) {
     _cartList.removeWhere((element) => element.id == id);
-    print(_cartList);
+    // print(_cartList);
     change(getCartItems, status: RxStatus.success());
   }
 
@@ -64,7 +84,8 @@ class CartController extends GetxController with StateMixin<List<Product>> {
     int idx = _cartList.indexWhere((element) => element.id == id);
     _cartList[idx].quantity = _cartList[idx].quantity + 1;
 
-    print(_cartList[idx].quantity);
+    // print(_cartList[idx].quantity);
+    getTotalPrice();
     update();
   }
 
@@ -75,8 +96,9 @@ class CartController extends GetxController with StateMixin<List<Product>> {
     if (_cartList[idx].quantity == 0) {
       _cartList.removeAt(idx);
     }
-    print(_cartList);
-    print(_cartList[idx].quantity);
+    // print(_cartList);
+    // print(_cartList[idx].quantity);
+    getTotalPrice();
     update();
   }
 

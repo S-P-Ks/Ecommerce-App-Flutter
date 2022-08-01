@@ -16,7 +16,7 @@ class AppDrawer extends StatelessWidget {
         getStorage.read("username") != null ? getStorage.read("username") : "";
     String imgText =
         username != "" ? username.substring(0, 2).toUpperCase() : "";
-    // String imgtext = imgText as String;
+    String imgurl = getStorage.read("imageUrl");
 
     return Drawer(
       child: Column(
@@ -47,16 +47,17 @@ class AppDrawer extends StatelessWidget {
                     child: CircleAvatar(
                       radius: 50,
                       backgroundColor: Colors.black54,
-                      child: Text(
-                        imgText,
-                        style: TextStyle(fontSize: 20, fontFamily: "Quicksand"),
-                      ),
+                      backgroundImage: NetworkImage(imgurl),
                     ),
                   ),
                   const SizedBox(
                     height: 20,
                   ),
-                  Text(username),
+                  Text(
+                    username,
+                    style:
+                        const TextStyle(fontSize: 20, fontFamily: "Quicksand"),
+                  ),
                 ],
               ),
             ),

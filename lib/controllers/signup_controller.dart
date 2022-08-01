@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -9,6 +10,24 @@ import 'package:image_picker/image_picker.dart';
 
 class SignUpController extends GetxController {
   final GlobalKey<FormState> singupKey = GlobalKey<FormState>();
+  var imgSelected = false.obs;
+  var filePath = "".obs;
+  late File file;
+
+  Future<void> getImage() async {
+    final imagePicker = await ImagePicker().pickImage(
+      source: ImageSource.gallery,
+      maxWidth: 150,
+      imageQuality: 50,
+    );
+    print(imagePicker!.path);
+    filePath.value = imagePicker.path;
+    print(filePath.value);
+    imgSelected.value = !imgSelected.value;
+    file = File(filePath.value);
+    print(imgSelected);
+    // return image;
+  }
 
   final getStorage = GetStorage();
 
@@ -25,12 +44,13 @@ class SignUpController extends GetxController {
 
   @override
   void onInit() {
-    super.onInit();
     emailController = TextEditingController();
     passwordController = TextEditingController();
     addressController = TextEditingController();
     phoneController = TextEditingController();
     usernameController = TextEditingController();
+
+    super.onInit();
   }
 
   @override
@@ -85,20 +105,6 @@ class SignUpController extends GetxController {
   late File img;
   String? imagePath;
 
-  Future<void> getImage() async {
-    final pickedFile =
-        await ImagePicker().pickImage(source: ImageSource.camera);
-
-    if (pickedFile != null) {
-      img = File(pickedFile.path);
-      imagePath = pickedFile.path;
-      print(imagePath);
-      update();
-    } else {
-      print('No image selected.');
-    }
-  }
-
   var user;
 
   void checkSignup() async {
@@ -117,7 +123,18 @@ class SignUpController extends GetxController {
       user = authResult.user;
       // print(user);
       String uid = user.uid;
-      print(uid);
+
+      print("UserId : $uid");
+
+      final ref =
+          FirebaseStorage.instance.ref().child("user_img").child(uid + ".jpg");
+
+      print("File : $file");
+      await ref
+          .putFile(file)
+          .whenComplete(() => print("Image uploaded successfully."));
+
+      final imgurl = await ref.getDownloadURL();
 
       await FirebaseFirestore.instance.collection("users").doc(user.uid).set(
         {
@@ -125,6 +142,10 @@ class SignUpController extends GetxController {
           "username": username,
           "address": address,
           "phoneNumber": phoneNumber,
+          "wishlist": [],
+          "cart": [],
+          "orders": [],
+          "imageurl": imgurl
         },
       );
 
@@ -142,6 +163,7 @@ class SignUpController extends GetxController {
       await Future.delayed(Duration(microseconds: 1000));
       Get.toNamed("/");
     } catch (e) {
+      print(e);
       Get.snackbar(
         "Error",
         "User already exists.",

@@ -34,6 +34,31 @@ class SignUp extends GetWidget<SignUpController> {
                   const SizedBox(
                     height: 20,
                   ),
+                  Container(
+                    child: Column(
+                      children: [
+                        Obx(
+                          () => controller.imgSelected.value
+                              ? CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.black54,
+                                  backgroundImage: FileImage(
+                                      File(controller.filePath.value)),
+                                )
+                              : const CircleAvatar(
+                                  radius: 50,
+                                  backgroundColor: Colors.black54,
+                                  backgroundImage: null,
+                                ),
+                        ),
+                        TextButton.icon(
+                          onPressed: () => controller.getImage(),
+                          icon: const Icon(Icons.image),
+                          label: const Text("Add Image"),
+                        )
+                      ],
+                    ),
+                  ),
                   const SizedBox(
                     height: 20,
                   ),
