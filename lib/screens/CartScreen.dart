@@ -63,11 +63,11 @@ class CartScreen extends GetView<CartController> {
                   ),
                 ),
                 child: Obx(
-                  () => controller.getCartListLength > 0
+                  () => controller.totalProducts.value > 0
                       ? ListView.builder(
                           scrollDirection: Axis.vertical,
                           shrinkWrap: true,
-                          itemCount: controller.getCartListLength,
+                          itemCount: controller.getCartListLength(),
                           itemBuilder: ((context, index) {
                             final img = controller.getCartItems[index].image;
                             final Title = controller.getCartItems[index].title;
@@ -135,7 +135,11 @@ class CartScreen extends GetView<CartController> {
                     fontFamily: "Quicksand",
                   )),
                 ),
-                onPressed: () {},
+                onPressed: controller.getCartItems.length != 0
+                    ? () {
+                        controller.addOrders();
+                      }
+                    : null,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [

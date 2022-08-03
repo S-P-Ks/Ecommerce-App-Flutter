@@ -166,7 +166,8 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                               onPressed: () {
                                 cc.toggleCart(int.parse(id));
                               },
-                              child: cc.isInCart(int.parse(id))
+                              child: cc.getCartListLength() != 0 &&
+                                      cc.isInCart(int.parse(id))
                                   ? Row(
                                       mainAxisAlignment:
                                           MainAxisAlignment.center,

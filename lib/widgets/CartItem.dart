@@ -216,8 +216,8 @@ class _CartItemState extends State<CartItem> {
                   toogleOpen();
                 },
                 icon: open
-                    ? Icon(Icons.arrow_upward)
-                    : Icon(Icons.arrow_downward),
+                    ? const Icon(Icons.arrow_upward)
+                    : const Icon(Icons.arrow_downward),
               ),
             ),
             if (open)

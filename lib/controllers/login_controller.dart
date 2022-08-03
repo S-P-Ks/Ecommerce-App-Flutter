@@ -12,6 +12,8 @@ class LoginController extends GetxController {
   late TextEditingController emailController, passwordController;
   var email = '';
   var password = '';
+  var loading = false.obs;
+
   @override
   void onInit() {
     super.onInit();
@@ -56,6 +58,7 @@ class LoginController extends GetxController {
     loginFormKey.currentState!.save();
 
     try {
+      loading(true);
       var authResult = await _auth.signInWithEmailAndPassword(
           email: email, password: password);
 
@@ -67,7 +70,7 @@ class LoginController extends GetxController {
           Duration(seconds: 2),
           () => Get.snackbar("Success", "Login Successful",
               snackPosition: SnackPosition.BOTTOM));
-
+      loading(false);
       if (getStorage.read("intro") != null &&
           getStorage.read("intro") == "done") {
         Get.toNamed("/");
@@ -75,6 +78,7 @@ class LoginController extends GetxController {
         Get.toNamed("/intro");
       }
     } catch (e) {
+      loading(false);
       print(e);
       Get.snackbar(
         "Error",
@@ -83,6 +87,4 @@ class LoginController extends GetxController {
       );
     }
   }
-
-  void checkSignUp() {}
 }

@@ -13,6 +13,7 @@ class SignUpController extends GetxController {
   var imgSelected = false.obs;
   var filePath = "".obs;
   late File file;
+  var loading = false.obs;
 
   Future<void> getImage() async {
     final imagePicker = await ImagePicker().pickImage(
@@ -124,12 +125,12 @@ class SignUpController extends GetxController {
       // print(user);
       String uid = user.uid;
 
-      print("UserId : $uid");
+      // print("UserId : $uid");
 
       final ref =
           FirebaseStorage.instance.ref().child("user_img").child(uid + ".jpg");
 
-      print("File : $file");
+      // print("File : $file");
       await ref
           .putFile(file)
           .whenComplete(() => print("Image uploaded successfully."));

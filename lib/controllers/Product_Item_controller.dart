@@ -26,38 +26,11 @@ class ProductItemController extends GetxController
     return [..._products];
   }
 
-  void getUserInfo() async {
-    print("called");
-    User u = FirebaseAuth.instance.currentUser!;
-    print(u.uid);
-    String uid = u.uid;
-    var userinfo =
-        await FirebaseFirestore.instance.collection("users").doc(uid).get();
-    print(userinfo.data());
-
-    var user = userinfo.data();
-
-    String username = user!["username"];
-
-    String phoneNumber = user["phoneNumber"];
-    String address = user["address"];
-    String email = user["email"];
-    String imageUrl = user["imageurl"];
-    String intro = user["intro"];
-
-    getStorage.write("username", username);
-    getStorage.write("phoneNumber", phoneNumber);
-    getStorage.write("address", address);
-    getStorage.write("email", email);
-    getStorage.write("imageUrl", imageUrl);
-    getStorage.write("intro", intro);
-  }
-
   @override
   void onInit() {
     getAllProducts();
     print("calling");
-    getUserInfo();
+    // getUserInfo();
     super.onInit();
   }
 

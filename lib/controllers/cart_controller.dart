@@ -1,14 +1,17 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:ecommapp/controllers/order_controller.dart';
 import 'package:ecommapp/models/Product.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
 class CartController extends GetxController with StateMixin<List<Product>> {
-  OrderController oc = Get.put(OrderController(), permanent: true);
+  OrderController oc = Get.find<OrderController>();
+  FirebaseFirestore FF = FirebaseFirestore.instance;
 
   List<dynamic> _cartList = [].obs;
   var productsList = [];
   RxBool open = true.obs;
+  RxInt totalProducts = 0.obs;
 
   RxDouble totalPrice = 0.0.obs;
 
@@ -18,6 +21,7 @@ class CartController extends GetxController with StateMixin<List<Product>> {
 
   addProdustList(List<dynamic> p) {
     productsList = [...p];
+    totalProducts.value = productsList.length;
   }
 
   bool isInCart(int id) {
@@ -26,7 +30,13 @@ class CartController extends GetxController with StateMixin<List<Product>> {
   }
 
   void addOrders() {
-    String key = UniqueKey().toString();
+    String key = DateTime.now().toString();
+    key = key + "+" + totalPrice.value.toString();
+    oc.addOrders(key, _cartList);
+    _cartList = [];
+    print(_cartList);
+    totalPrice.value = 0;
+    getCartListLength();
   }
 
   void getTotalPrice() {
@@ -44,18 +54,24 @@ class CartController extends GetxController with StateMixin<List<Product>> {
     if (idx >= 0) {
       _cartList.removeWhere((element) => element.id == id);
     } else {
-      dynamic p = productsList.firstWhere((element) {
-        return element.id == id;
-      });
+      dynamic p = productsList.firstWhere(
+        (element) {
+          return element.id == id;
+        },
+      );
       _cartList.add(p);
+      totalProducts.value = totalProducts.value + 1;
     }
     // print(_cartList);
     getTotalPrice();
     update();
   }
 
-  int get getCartListLength {
-    return [..._cartList].length;
+  int getCartListLength() {
+    int t = [..._cartList].length;
+    totalProducts.value = t;
+    update();
+    return totalProducts.value;
   }
 
   getProductById(int id) {
@@ -100,6 +116,13 @@ class CartController extends GetxController with StateMixin<List<Product>> {
     // print(_cartList[idx].quantity);
     getTotalPrice();
     update();
+  }
+
+  void orderNow() async {
+    String key = DateTime.now().toString();
+    print("Printling");
+    print(key);
+    oc.addOrders(key, _cartList);
   }
 
   int idx(int id) {

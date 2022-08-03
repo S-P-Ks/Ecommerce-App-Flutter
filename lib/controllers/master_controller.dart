@@ -8,19 +8,24 @@ class MasterController extends GetxController {
 
   @override
   void onInit() {
+    getUserInfo();
     super.onInit();
   }
 
   @override
   void onClose() {
-    // TODO: implement onClose
     super.onClose();
   }
 
   @override
   void onReady() {
-    // TODO: implement onReady
     super.onReady();
+  }
+
+  void pushCart() {
+    List<dynamic> cart = getStorage.read("cart");
+
+    print(cart);
   }
 
   void getUserInfo() async {
@@ -41,6 +46,9 @@ class MasterController extends GetxController {
     String email = user["email"];
     String imageUrl = user["imageurl"];
     String intro = user["intro"];
+    List<dynamic> wishlist = user["wishlist"];
+    List<dynamic> cart = user["cart"];
+    List<dynamic> orders = user["orders"];
 
     getStorage.write("username", username);
     getStorage.write("phoneNumber", phoneNumber);
