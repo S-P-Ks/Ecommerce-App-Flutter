@@ -44,6 +44,9 @@ dependencies:
   introduction_screen: ^3.0.2
   lottie: ^1.4.0
   intl: ^0.17.0
+  flutter_speed_dial: ^6.0.0
+  webview_flutter: ^3.0.4
+  flutter_tawk: ^0.1.0
 
 dev_dependencies:
   flutter_test:

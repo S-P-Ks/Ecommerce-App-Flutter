@@ -84,23 +84,23 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
 
   @override
   Widget build(BuildContext context) {
-    final id = Get.parameters["id"];
+    final id = Get.parameters["id"]!;
     // print(id);
-    Product p = pc.getProductById(int.parse(id!));
+    Product p = pc.getProductById(int.parse(id));
     // print("heelo");
     return Scaffold(
       appBar: AppBar(
-        title: Text(p.title),
+        title: Text(p.attributes.title),
       ),
       body: SingleChildScrollView(
         child: Container(
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(20),
+                padding: const EdgeInsets.all(20),
                 child: Text(
-                  "${p.title}",
-                  style: TextStyle(
+                  "${p.attributes.title}",
+                  style: const TextStyle(
                     fontFamily: "Quicksand",
                     fontSize: 20,
                   ),
@@ -110,7 +110,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                 height: 300,
                 width: double.infinity,
                 child: FittedBox(
-                  child: Image.network(p.image),
+                  child: Image.network(p.attributes.image),
                 ),
               ),
               Container(
@@ -123,8 +123,8 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                       children: [
                         TextWidget.getText("Ratings : ", "Quicksand", 15),
                         Spacer(),
-                        getRating(p.rating.rate),
-                        Text("(${p.rating.count})"),
+                        getRating(p.attributes.rating.rate),
+                        Text("(${p.attributes.rating.count})"),
                       ],
                     ),
                     SizedBox(
@@ -135,7 +135,8 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                       children: [
                         TextWidget.getText("Price : ", "Quicksand", 20),
                         Spacer(),
-                        TextWidget.getText("\$${p.price}", "Quicksand", 20),
+                        TextWidget.getText(
+                            "\$${p.attributes.price}", "Quicksand", 20),
                       ],
                     ),
                     SizedBox(height: 20),
@@ -145,7 +146,7 @@ class ProductDetailScreen extends GetWidget<ProductDetailController> {
                       children: [
                         Expanded(
                           child: Text(
-                            "${p.description}",
+                            "${p.attributes.description}",
                             softWrap: false,
                             maxLines: 3,
                             overflow: TextOverflow.ellipsis,

@@ -19,9 +19,9 @@ class WishListScreen extends GetView<WishListController> {
             ? ListView.builder(
                 itemCount: controller.getWishList.length,
                 itemBuilder: ((context, index) {
-                  final img = controller.getWishList[index].image;
-                  final Title = controller.getWishList[index].title;
-                  final price = controller.getWishList[index].price;
+                  final img = controller.getWishList[index].attributes.image;
+                  final Title = controller.getWishList[index].attributes.title;
+                  final price = controller.getWishList[index].attributes.price;
                   final id = controller.getWishList[index].id;
 
                   return Container(

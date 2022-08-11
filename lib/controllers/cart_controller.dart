@@ -41,7 +41,7 @@ class CartController extends GetxController with StateMixin<List<Product>> {
 
   void getTotalPrice() {
     double t = _cartList.fold(totalPrice.value,
-        (previousValue, element) => previousValue + element.price);
+        (previousValue, element) => previousValue + element.attributes.price);
     totalPrice.value = t;
 
     // print("Total Price : $totalPrice.value");
@@ -54,7 +54,7 @@ class CartController extends GetxController with StateMixin<List<Product>> {
     if (idx >= 0) {
       _cartList.removeWhere((element) => element.id == id);
     } else {
-      dynamic p = productsList.firstWhere(
+      Product p = productsList.firstWhere(
         (element) {
           return element.id == id;
         },
@@ -98,7 +98,7 @@ class CartController extends GetxController with StateMixin<List<Product>> {
 
   void increaseQuantity(int id) {
     int idx = _cartList.indexWhere((element) => element.id == id);
-    _cartList[idx].quantity = _cartList[idx].quantity + 1;
+    _cartList[idx].attributes.quantity = _cartList[idx].attributes.quantity + 1;
 
     // print(_cartList[idx].quantity);
     getTotalPrice();
@@ -107,9 +107,9 @@ class CartController extends GetxController with StateMixin<List<Product>> {
 
   void decreaseQuantity(int id) {
     int idx = _cartList.indexWhere((element) => element.id == id);
-    _cartList[idx].quantity = _cartList[idx].quantity - 1;
+    _cartList[idx].attributes.quantity = _cartList[idx].attributes.quantity - 1;
 
-    if (_cartList[idx].quantity == 0) {
+    if (_cartList[idx].attributes.quantity == 0) {
       _cartList.removeAt(idx);
     }
     // print(_cartList);

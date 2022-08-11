@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class CartScreen extends GetView<CartController> {
-  const CartScreen({Key? key}) : super(key: key);
+  CartScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,8 +24,8 @@ class CartScreen extends GetView<CartController> {
             alignment: Alignment.center,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
-              children: const [
-                Text(
+              children: [
+                const Text(
                   "Added to the cart : ",
                   style: TextStyle(
                     fontFamily: "Quicksand",
@@ -33,18 +33,18 @@ class CartScreen extends GetView<CartController> {
                   ),
                   textAlign: TextAlign.center,
                 ),
-                // ElevatedButton(
-                //   onPressed: () {
-                //     controller.addOrders();
-                //   },
-                //   child: const Text(
-                //     "Order now",
-                //     style: TextStyle(
-                //       fontFamily: "Quicksand",
-                //       fontSize: 20,
-                //     ),
-                //   ),
-                // ),
+                ElevatedButton(
+                  onPressed: () {
+                    controller.addOrders();
+                  },
+                  child: const Text(
+                    "Order now",
+                    style: TextStyle(
+                      fontFamily: "Quicksand",
+                      fontSize: 20,
+                    ),
+                  ),
+                ),
               ],
             ),
           ),
@@ -69,9 +69,9 @@ class CartScreen extends GetView<CartController> {
                           shrinkWrap: true,
                           itemCount: controller.getCartListLength(),
                           itemBuilder: ((context, index) {
-                            final img = controller.getCartItems[index].image;
-                            final Title = controller.getCartItems[index].title;
-                            final price = controller.getCartItems[index].price;
+                            // final img = controller.getCartItems[index].image;
+                            // final Title = controller.getCartItems[index].title;
+                            // final price = controller.getCartItems[index].price;
                             final id = controller.getCartItems[index].id;
 
                             return Dismissible(

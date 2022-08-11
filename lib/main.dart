@@ -1,6 +1,7 @@
 import 'package:ecommapp/bindings/loginBindings.dart';
 import 'package:ecommapp/bindings/signupBinding.dart';
 import 'package:ecommapp/screens/CartScreen.dart';
+import 'package:ecommapp/screens/CustomerChat.dart';
 import 'package:ecommapp/screens/OnboardingScreen.dart';
 import 'package:ecommapp/screens/LoginScreen.dart';
 import 'package:ecommapp/screens/OrderScreen.dart';
@@ -96,6 +97,10 @@ class MyApp extends StatelessWidget {
         GetPage(
           name: "/intro",
           page: () => OnboardingScreen(),
+        ),
+        GetPage(
+          name: "/chat",
+          page: () => CustomerChatScreen(),
         )
       ],
       themeMode: ThemeMode.dark,

@@ -47,38 +47,41 @@ class OrderScreen extends GetView<OrderController> {
                         ),
                       ),
                       const Divider(),
-                      ...controller.getOrder[e].map((a) => Container(
-                            margin: const EdgeInsets.all(10),
-                            padding: const EdgeInsets.all(10),
-                            child: ListTile(
-                              onTap: () {
-                                Get.toNamed("/shop/${a.id}");
-                              },
-                              leading: SizedBox(
-                                width: 100,
-                                height: 100,
-                                child: FittedBox(
-                                  child: Image.network(a.image),
-                                  fit: BoxFit.contain,
-                                ),
-                              ),
-                              title: Text(
-                                "${a.title}",
-                                style: const TextStyle(
-                                  fontFamily: "Quicksand",
-                                  fontSize: 15,
-                                ),
-                              ),
-                              // subtitle: Text(a.price),
-                              trailing: Text(
-                                "\$${a.price}",
-                                style: const TextStyle(
-                                  fontFamily: "Quicksand",
-                                  fontSize: 15,
-                                ),
+                      ...controller.getOrder[e].map((a) {
+                        print(a);
+                        return Container(
+                          margin: const EdgeInsets.all(10),
+                          padding: const EdgeInsets.all(10),
+                          child: ListTile(
+                            onTap: () {
+                              Get.toNamed("/shop/${a.id}");
+                            },
+                            leading: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: FittedBox(
+                                child: Image.network(a.attributes.image),
+                                fit: BoxFit.contain,
                               ),
                             ),
-                          )),
+                            title: Text(
+                              "${a.attributes.title}",
+                              style: const TextStyle(
+                                fontFamily: "Quicksand",
+                                fontSize: 15,
+                              ),
+                            ),
+                            // subtitle: Text(a.price),
+                            trailing: Text(
+                              "\$${a.attributes.price}",
+                              style: const TextStyle(
+                                fontFamily: "Quicksand",
+                                fontSize: 25,
+                              ),
+                            ),
+                          ),
+                        );
+                      }),
                       const Divider(),
                       const SizedBox(
                         height: 10,

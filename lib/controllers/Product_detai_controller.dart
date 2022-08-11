@@ -8,8 +8,11 @@ class ProductDetailController extends GetxController with StateMixin<Product> {
 
   void init() {}
 
-  dynamic getProductById(int id) {
-    dynamic p = productList.firstWhere((element) => element.id == id);
+  Product getProductById(int id) {
+    Product p = productList.firstWhere((element) {
+      // print(element["id"]);
+      return element.id == id;
+    });
     return p;
   }
 }

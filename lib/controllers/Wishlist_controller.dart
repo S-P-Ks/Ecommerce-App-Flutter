@@ -36,7 +36,7 @@ class WishListController extends GetxController {
     update();
   }
 
-  List<dynamic> get getWishList {
+  List<Product> get getWishList {
     return [..._wishlist];
   }
 }

@@ -4,6 +4,7 @@ import 'package:ecommapp/controllers/Product_Item_controller.dart';
 import 'package:ecommapp/controllers/Wishlist_controller.dart';
 import 'package:ecommapp/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_speed_dial/flutter_speed_dial.dart';
 import 'package:get/get.dart';
 
 enum FilterOptions {
@@ -35,14 +36,13 @@ class ProductOverView extends GetView<ProductItemController> {
       body: Container(
         child: controller.obx(
           (data) {
-            print(controller.getProducts[0].quantity);
             return Container(
               child: ListView.builder(
                 itemCount: controller.getProducts.length,
                 itemBuilder: ((context, index) {
-                  final img = controller.getProducts[index].image;
-                  final Title = controller.getProducts[index].title;
-                  final price = controller.getProducts[index].price;
+                  final img = controller.getProducts[index].attributes.image;
+                  final Title = controller.getProducts[index].attributes.title;
+                  final price = controller.getProducts[index].attributes.price;
                   final id = controller.getProducts[index].id;
 
                   return Container(
@@ -100,6 +100,99 @@ class ProductOverView extends GetView<ProductItemController> {
           ),
         ),
       ),
+      floatingActionButton: SpeedDial(
+        animatedIcon: AnimatedIcons.menu_close,
+        backgroundColor: Colors.black,
+        overlayColor: Colors.brown,
+        overlayOpacity: 0.8,
+        children: [
+          SpeedDialChild(
+            child: Icon(Icons.chat),
+            label: "Customer Support",
+            backgroundColor: Colors.amberAccent,
+            onTap: () {
+              Get.toNamed("/chat");
+            },
+          ),
+          SpeedDialChild(
+            child: Icon(Icons.filter_list),
+            label: "Filter",
+            backgroundColor: Colors.orange,
+            onTap: () {
+              Get.bottomSheet(
+                BottomSheet(
+                  onClosing: () {},
+                  builder: (ctx) {
+                    return Container(
+                      padding: const EdgeInsets.all(10),
+                      child: GetBuilder<ProductItemController>(
+                        builder: (_c) {
+                          return Wrap(
+                            children: [
+                              ...controller.getCategories
+                                  .asMap()
+                                  .entries
+                                  .map(
+                                    (e) => Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          e.value.attributes.name
+                                                  .substring(0, 1)
+                                                  .toUpperCase() +
+                                              e.value.attributes.name
+                                                  .substring(1),
+                                          style: const TextStyle(
+                                            fontFamily: "Quicksand",
+                                            fontSize: 15,
+                                          ),
+                                        ),
+                                        Checkbox(
+                                          value: controller.checkBoxed[e.key],
+                                          onChanged: (val) {
+                                            controller.changeCheckBox(e.key);
+                                          },
+                                        )
+                                      ],
+                                    ),
+                                  )
+                                  .toList(),
+                              Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text(
+                                    "Show All",
+                                    style: TextStyle(
+                                      fontFamily: "Quicksand",
+                                      fontSize: 15,
+                                    ),
+                                  ),
+                                  Checkbox(
+                                    value: controller.showAll,
+                                    onChanged: (val) {
+                                      controller.showAllProducts();
+                                    },
+                                  )
+                                ],
+                              ),
+                            ],
+                          );
+                        },
+                      ),
+                    );
+                  },
+                ),
+              );
+            },
+          )
+        ],
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () {},
+      //   child: Icon(Icons.add),
+      // ),
     );
   }
 }

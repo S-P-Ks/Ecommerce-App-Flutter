@@ -175,9 +175,9 @@ class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
     Product p = cc.getProductById(widget.id);
-
-    String Title = p.title;
-    var total = p.price * p.quantity!;
+    print(p.attributes);
+    String Title = p.attributes.title;
+    var total = p.attributes.price * p.attributes.quantity;
     print(total);
 
     return Container(
@@ -200,7 +200,7 @@ class _CartItemState extends State<CartItem> {
                 width: 100,
                 height: 100,
                 child: FittedBox(
-                  child: Image.network(p.image),
+                  child: Image.network(p.attributes.image),
                   fit: BoxFit.contain,
                 ),
               ),
@@ -233,7 +233,7 @@ class _CartItemState extends State<CartItem> {
                               TextWidget.getText(
                                   "Quantity : ", "Quicksand", 20),
                               TextWidget.getText(
-                                  "${p.quantity}", "Quicksand", 20),
+                                  "${p.attributes.quantity}", "Quicksand", 20),
                             ],
                           ),
                         ),
@@ -247,7 +247,7 @@ class _CartItemState extends State<CartItem> {
                               TextWidget.getText(
                                   "Total Price : ", "Quicksand", 20),
                               TextWidget.getText(
-                                  "${(p.quantity! * p.price).toStringAsFixed(2)}",
+                                  "${(p.attributes.quantity * p.attributes.price).toStringAsFixed(2)}",
                                   "Quicksand",
                                   20),
                             ],
